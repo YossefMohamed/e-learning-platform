@@ -1,5 +1,12 @@
 import Image from "next/image";
 import { CourseCard } from "../../components/CourseCard";
+import {
+  BsArrow90DegRight,
+  BsArrowBarRight,
+  BsClock,
+  BsPerson,
+} from "react-icons/bs";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -8,8 +15,12 @@ export default function Home() {
         <div className="gap-8 items-center  px-4 mx-auto max-w-screen-xl xl:gap-16 grid grid-cols-2">
           <img className="w-[90%]" src="/kid-learn.png" alt="dashboard image" />
           <div className="mt-4 md:mt-0">
-            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-              Let's create more tools and ideas that brings us together.
+            <h2 className="mb-4 text-3xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+              Let's create more{" "}
+              <span className="text-ttertiary text-4xl font-bold uppercase">
+                tools
+              </span>{" "}
+              and ideas that brings us together.
             </h2>
             <p className="mb-6  text-tmuted">
               Flowbite helps you connect with friends and communities of people
@@ -138,7 +149,43 @@ export default function Home() {
           <CourseCard />
           <CourseCard />
           <CourseCard />
-          <CourseCard />
+          <div className="flex flex-col w-[300px] items-center justify-center shadow-xl hover:shadow-2xl hover:opacity-95 rounded-xl bg-gray-200">
+            <a className=" text-2xl text-tsecondary font-bold flex items-center justify-center gap-2">
+              <span>Explore More</span>
+              <span>
+                <FaArrowRight />
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section className="bg-primary  overflow-hidden h-[350px] w-1/2 mx-auto relative my-20 rounded-xl flex flex-col">
+        <div className="w-full h-full absolute z-10 top-0 right-0 bg-[url('/pattern.png')] opacity-10"></div>
+        <div className="flex flex-col font-bold justify-center opacity-100 text-tinverse items-center w-full h-full z-50 text-2xl ">
+          <div className="uppercase">Follow our news letter</div>
+          <div className="flex w-1/2">
+            <div className="relative mb-6 flex-1">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg
+                  aria-hidden="true"
+                  className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="input-group-1"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="name@flowbite.com"
+              />
+            </div>
+            <div className="btn-primary text-lg h-fit">Submit</div>
+          </div>
         </div>
       </section>
     </>

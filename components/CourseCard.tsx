@@ -7,7 +7,7 @@ export const CourseCard = () => {
       <div>
         <img src="/course-bg.jpg" alt="" className="rounded-3xl" />
       </div>
-      <div className="flex flex-col p-3 gap-6 ">
+      <div className="flex flex-col p-2 gap-6 ">
         <div className="flex justify-between price text-sm  font-bold w-full ">
           <span className="bg-primary text-tinverse px-2 py-1 rounded-xl text-xs">
             Year 10
