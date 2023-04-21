@@ -5,6 +5,10 @@ export const Layout = ({ children }: any) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.min.css"
+        />
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -13,10 +17,10 @@ export const Layout = ({ children }: any) => {
           rel="stylesheet"
         />
 
-        <title>EZZ</title>
+        <title>Learn</title>
       </Head>
 
-      <div>{children}</div>
+      <div className="min-h-screen flex flex-col">{children}</div>
     </>
   );
 };

@@ -13,12 +13,12 @@ module.exports = {
     extend: {
       colors: {
         primary: "#3d5a80",
-        secondary: "#f74e6e",
+        secondary: "#4f73a4",
         tertiary: "#00865e",
         light: "#fff",
         tprimary: "#000",
         tsecondary: "#4a4a96",
-        ttertiary: "#f74e6e",
+        ttertiary: "#4f73a4",
         tmuted: "#999797",
         tinverse: "#fff",
       },
