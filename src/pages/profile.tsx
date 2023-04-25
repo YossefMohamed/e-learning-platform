@@ -15,51 +15,48 @@ function Profile() {
       <div className="right flex-1 p-10 ">
         <div className="info flex flex-col gap-4">
           <div className="flex flex-col ">
-            <img
-              src="/kid-learn.png"
-              width={150}
-              height={150}
-              className="m-auto rounded-xl"
-            />
+            <div className="btn-secondary">My profile</div>
           </div>
-          <div className="flex flex-col ">
-            <span className="label">Name :</span>
-            <input
-              type="text"
-              className="text-input font-bold"
-              value="Yossef Mohamed"
-              disabled
-            ></input>
-          </div>
+          <div className="bg-gray-100 p-6 rounded-xl flex  flex-col gap-5">
+            <div className="flex flex-col ">
+              <span className="label">Name :</span>
+              <input
+                type="text"
+                className="text-input font-bold"
+                value="Yossef Mohamed"
+                disabled
+              ></input>
+            </div>
 
-          <div className="flex flex-col ">
-            <span className="label">Year :</span>
-            <input
-              type="text"
-              className="text-input font-bold"
-              value="Year 11"
-              disabled
-            ></input>
-          </div>
+            <div className="flex flex-col ">
+              <span className="label">Year :</span>
+              <input
+                type="text"
+                className="text-input font-bold"
+                value="Year 11"
+                disabled
+              ></input>
+            </div>
 
-          <div className="flex flex-col ">
-            <span className="label">Course :</span>
-            <input
-              type="text"
-              className="text-input font-bold"
-              value="Maths"
-              disabled
-            ></input>
-          </div>
+            <div className="flex flex-col ">
+              <span className="label">Course :</span>
+              <input
+                type="text"
+                className="text-input font-bold"
+                value="Maths"
+                disabled
+              ></input>
+            </div>
 
-          <div className="flex flex-col ">
-            <span className="label">Phone Number :</span>
-            <input
-              type="text"
-              className="text-input font-bold"
-              value="01154784154"
-              disabled
-            ></input>
+            <div className="flex flex-col ">
+              <span className="label">Phone Number :</span>
+              <input
+                type="text"
+                className="text-input font-bold"
+                value="01154784154"
+                disabled
+              ></input>
+            </div>
           </div>
           <div className="btn-primary ml-auto" onClick={openModal}>
             Update Password
