@@ -26,7 +26,7 @@ const request = async function (options: any) {
        * is an instance of XMLHttpRequest in the browser and an instance
        * of http.ClientRequest in Node.js
        */
-      console.log(error.request);
+      return Promise.reject(error.message);
     } else {
       // Something happened in setting up the request and triggered an Error
       console.log(error.message);

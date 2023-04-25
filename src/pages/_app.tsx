@@ -9,7 +9,20 @@ import Auth from "@/components/Auth";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: 3,
+      retryDelay: 8000,
+    },
+    mutations: {
+      retry: false,
+      retryDelay: 50000,
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
