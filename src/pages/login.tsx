@@ -1,7 +1,41 @@
-import Link from "next/link";
-import React from "react";
+import Spinner from "@/components/Spinner";
+import { useUserLogin } from "@/custom-hooks/useLogin";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { addUser } from "@/redux/slices/userSlices";
 
 function login() {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const {
+    data,
+    isLoading,
+    mutate: login,
+    isSuccess,
+    isError,
+    error,
+  } = useUserLogin();
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    if (isSuccess && !isError) {
+      toast.success("Login Successful!");
+      localStorage.setItem("token", data.token);
+      isSuccess && !isError && dispatch(addUser(data));
+      router.push("/");
+    } else if (isError) {
+      toast.error(error);
+    } else return;
+  }, [isSuccess, isError]);
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    !isLoading && login({ phoneNumber, password }); // Login api call
+  };
   return (
     <>
       <section className="flex flex-col md:flex-row h-screen items-center">
@@ -24,14 +58,15 @@ function login() {
               <div>
                 <label className="block ">Email Address</label>
                 <input
-                  type="email"
-                  name=""
-                  id=""
-                  placeholder="Enter Email Address"
+                  type="text"
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  placeholder="Enter your phone number"
                   className="text-input"
-                  autofocus
                   autoComplete=""
                   required
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
                 />
               </div>
               <div className="mt-4">
@@ -39,16 +74,22 @@ function login() {
                 <input
                   type="password"
                   name=""
-                  id=""
+                  id="password"
                   placeholder="Enter Password"
                   minLength={6}
                   className="text-input"
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
-              <button type="submit" className="btn-primary w-full mt-6">
-                Log In
+              <button
+                onClick={handleSubmit}
+                className="btn-primary w-full mt-6"
+                disabled={isLoading}
+              >
+                {isLoading ? <Spinner /> : "Log In"}
               </button>
             </form>
           </div>

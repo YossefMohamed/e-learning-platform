@@ -22,7 +22,7 @@ const Modal: React.FC<{ closeModal: () => void }> = ({ closeModal }) => {
         </div>
 
         <div>
-          <label className="block ">Unit Number</label>
+          <label className="label">Unit Number</label>
           <input
             type="email"
             name=""
@@ -34,7 +34,7 @@ const Modal: React.FC<{ closeModal: () => void }> = ({ closeModal }) => {
           />
         </div>
         <div>
-          <label className="block ">Unit name</label>
+          <label className="label">Unit name</label>
           <input
             type="email"
             name=""

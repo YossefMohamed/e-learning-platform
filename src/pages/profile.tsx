@@ -1,34 +1,29 @@
+import UpdatePasswordModal from "@/components/UpdatePasswordModal";
 import React from "react";
 import { BsPersonBadge } from "react-icons/bs";
 import { FaVideo } from "react-icons/fa";
+import ProfileLayout from "../../layouts/ProfileLayout";
 
 function Profile() {
+  const [modal, setModal] = React.useState(false);
+  const closeModal = () => {
+    setModal(false);
+  };
+  const openModal = () => setModal(true);
   return (
-    <div className="container mx-auto my-5 p-5 flex gap-4  min-h-screen">
-      <div className="left w-1/3 border-4 p-4 rounded-2xl">
-        <img
-          src="/kid-learn.png"
-          width={150}
-          height={150}
-          className="m-auto rounded-full"
-        />
-        <div className="sec-title border-0">Yossef Mohamed</div>
-        <div className="flex flex-col gap-2">
-          <div className="btn-primary w-full text-left flex items-center gap-4">
-            <BsPersonBadge />
-            Profile
-          </div>
-          <div className="btn-primary w-full text-left flex items-center gap-4">
-            <FaVideo />
-            Watched Videos
-          </div>
-        </div>
-      </div>
-      <div className="right flex-1 border-4 p-4 rounded-2xl">
-        <div className="sec-title">User Information</div>
+    <ProfileLayout>
+      <div className="right flex-1 p-10 ">
         <div className="info flex flex-col gap-4">
           <div className="flex flex-col ">
-            <span className="text-md">Name :</span>
+            <img
+              src="/kid-learn.png"
+              width={150}
+              height={150}
+              className="m-auto rounded-xl"
+            />
+          </div>
+          <div className="flex flex-col ">
+            <span className="label">Name :</span>
             <input
               type="text"
               className="text-input font-bold"
@@ -38,7 +33,7 @@ function Profile() {
           </div>
 
           <div className="flex flex-col ">
-            <span className="text-md">Year :</span>
+            <span className="label">Year :</span>
             <input
               type="text"
               className="text-input font-bold"
@@ -48,7 +43,17 @@ function Profile() {
           </div>
 
           <div className="flex flex-col ">
-            <span className="text-md">Phone Number :</span>
+            <span className="label">Course :</span>
+            <input
+              type="text"
+              className="text-input font-bold"
+              value="Maths"
+              disabled
+            ></input>
+          </div>
+
+          <div className="flex flex-col ">
+            <span className="label">Phone Number :</span>
             <input
               type="text"
               className="text-input font-bold"
@@ -56,9 +61,12 @@ function Profile() {
               disabled
             ></input>
           </div>
+          <div className="btn-primary ml-auto" onClick={openModal}>
+            Update Password
+          </div>
         </div>
       </div>
-    </div>
+    </ProfileLayout>
   );
 }
 

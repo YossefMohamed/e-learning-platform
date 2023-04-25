@@ -1,12 +1,16 @@
+import { Rootstate } from "@/redux/store";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { BsPerson } from "react-icons/bs";
 import { FaElementor } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
   const [navbar, setNavbar] = useState(false);
-
+  const { isAuthenticated, user } = useSelector(
+    (state: Rootstate) => state.userState
+  );
   const changeBackground = () => {
-    console.log(window.scrollY);
     if (window.scrollY >= 66) {
       setNavbar(true);
     } else {
@@ -20,11 +24,11 @@ export const Header = () => {
   });
 
   let classStyle = !navbar
-    ? "nav-container  bg-light flex justify-between z-[99] py-3 shadow items-center  px-10 relative"
+    ? "nav-container  bg-light flex justify-between z-[99] py-5 shadow items-center  px-10 relative"
     : "nav-container flex justify-between py-3 z-[99] shadow-xl bg-primary sticky top-0  items-center relative  px-10";
   let textColor = !navbar
-    ? "items flex  gap-10 items-center text-sm text-tsecondary  font-bold "
-    : "items flex  gap-10 items-center text-sm text-light  font-bold";
+    ? "items flex  gap-10 items-center text-md text-tsecondary  font-bold  "
+    : "items flex  gap-10 items-center text-md text-light  font-bold ";
 
   let logoStyle = !navbar
     ? "logo text-4xl text-tsecondary"
@@ -41,13 +45,29 @@ export const Header = () => {
       <div className={textColor}>
         <Link href="/">Home</Link>
         <Link href="/years">Years</Link>
-
-        <Link
-          href="login"
-          className={!navbar ? "btn-primary" : "btn-secondary"}
-        >
-          Login
-        </Link>
+        {isAuthenticated && user.isAdmin && (
+          <Link href="/dashboard">Dashboard</Link>
+        )}
+        {isAuthenticated && <Link href="/logout">Logout</Link>}
+        {isAuthenticated ? (
+          <Link
+            href="/profile"
+            className={
+              !navbar
+                ? "btn-primary flex gap-1 items-center"
+                : "btn-secondary flex gap-1 items-center"
+            }
+          >
+            <BsPerson /> Profile
+          </Link>
+        ) : (
+          <Link
+            href="/login"
+            className={!navbar ? "btn-primary" : "btn-secondary"}
+          >
+            Login
+          </Link>
+        )}
       </div>
 
       <div className="absolute h-1 bg-secondary top-[100%] right-0 w-full"></div>
