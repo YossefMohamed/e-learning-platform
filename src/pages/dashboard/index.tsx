@@ -117,6 +117,10 @@ const index = () => {
   }, [isError, isSuccess]);
 
   React.useEffect(() => {
+    usersResponse.isError && toast.error(usersResponse.error);
+  }, [usersResponse.isError, usersResponse.isSuccess]);
+
+  React.useEffect(() => {
     editUserResponse.isError && toast.error(editUserResponse.error);
     editUserResponse.isSuccess && toast.success("User has been edited !");
     editUserResponse.isSuccess && usersResponse.refetch();
@@ -135,7 +139,9 @@ const index = () => {
         {editModal && (
           <EditUserModal closeModal={closeModal} onSubmit={editUserSubmit} />
         )}
-        {checkModal && <CheckModal closeModal={closeModal} />}
+        {checkModal && (
+          <CheckModal closeModal={closeModal} onSubmit={console.log} />
+        )}
         <div className="relative sm:rounded-lg flex-1 p-10 border flex flex-col gap-5">
           <div className="flex gap-1 items-center  btn-secondary  ">
             <BsPerson /> Users
@@ -146,7 +152,7 @@ const index = () => {
                 <div className="flex-1">
                   <select
                     id="years"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
                   >
@@ -179,8 +185,8 @@ const index = () => {
             {usersResponse.isLoading ? (
               <Spinner />
             ) : (
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <table className="w-full text-sm text-left text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       Name
@@ -212,10 +218,13 @@ const index = () => {
                       id: string;
                     }) => {
                       return (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr
+                          className="bg-white border-b hover:bg-gray-50 "
+                          key={user.id}
+                        >
                           <th
                             scope="row"
-                            className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                            className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap "
                           >
                             <img
                               className="w-10 h-10 rounded-full"

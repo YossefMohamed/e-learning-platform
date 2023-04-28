@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 import Spinner from "./Spinner";
 import { useSelector } from "react-redux";
 import { Rootstate } from "@/redux/store";
+import { toast } from "react-hot-toast";
 
 const CreateUserModal: React.FC<{
   closeModal: () => void;
@@ -58,6 +59,10 @@ const CreateUserModal: React.FC<{
     if (year) coursesRespone.refetch();
   }, [year]);
 
+  React.useEffect(() => {
+    userResponse.isError && toast.error(userResponse.error);
+  }, [userResponse]);
+
   const yearsResponse = useQuery("years", async () => {
     const token: string = localStorage.getItem("token") || "";
 
@@ -79,14 +84,6 @@ const CreateUserModal: React.FC<{
   }, [out, closeModal]);
 
   const onSubmitForm = () => {
-    console.log({
-      name: name || userResponse.data.name,
-      password,
-      isAdmin: isAdmin || userResponse.data.isAdmin,
-      status: status || userResponse.data.status,
-      year: year,
-      course: course,
-    });
     onSubmit({
       name: name,
       password,
@@ -117,121 +114,129 @@ const CreateUserModal: React.FC<{
         }}
         autoComplete="off"
       >
-        {yearsResponse.isLoading || coursesRespone.isLoading ? (
+        {yearsResponse.isLoading ? (
           <Spinner />
         ) : (
-          <div className="max-h-full">
-            <div className="sec-title p-0 m-0 border-0">Edit User</div>
+          userResponse.isSuccess && (
+            <div className="max-h-full">
+              <div className="sec-title p-0 m-0 border-0">Edit User</div>
 
-            <div className="mt-3  flex flex-col gap-4">
-              <div className="group">
-                <label className="label">Student Name</label>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  className="text-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Student's full name"
-                  autoComplete="new-password"
-                />
-              </div>
+              {userResponse.isLoading ? (
+                <Spinner />
+              ) : (
+                <div className="mt-3  flex flex-col gap-4">
+                  <div className="group">
+                    <label className="label">Student Name</label>
+                    <input
+                      type="text"
+                      name=""
+                      id=""
+                      className="text-input"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Student's full name"
+                      autoComplete="new-password"
+                    />
+                  </div>
 
-              <div className="group">
-                <label className="label">Student Password</label>
-                <input
-                  type="password"
-                  name=""
-                  id=""
-                  value={password}
-                  className="text-input"
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Student's password"
-                  autoComplete="new-password"
-                />
-              </div>
+                  <div className="group">
+                    <label className="label">Student Password</label>
+                    <input
+                      type="password"
+                      name=""
+                      id=""
+                      value={password}
+                      className="text-input"
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Student's password"
+                      autoComplete="new-password"
+                    />
+                  </div>
 
-              <div className="group">
-                <label className="label">Student Year</label>
+                  <div className="group">
+                    <label className="label">Student Year</label>
 
-                <select
-                  id="countries"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) => setYear(e.target.value)}
-                >
-                  <option selected disabled>
-                    Choose a year
-                  </option>
-                  {yearsResponse.isSuccess &&
-                    yearsResponse.data?.map(
-                      (year: { name: string; id: string }) => {
-                        return <option value={year.id}>{year.name}</option>;
-                      }
-                    )}
-                </select>
-              </div>
+                    <select
+                      id="countries"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      onChange={(e) => setYear(e.target.value)}
+                    >
+                      <option selected disabled>
+                        Choose a year
+                      </option>
+                      {yearsResponse.isSuccess &&
+                        yearsResponse.data?.map(
+                          (year: { name: string; id: string }) => {
+                            return <option value={year.id}>{year.name}</option>;
+                          }
+                        )}
+                    </select>
+                  </div>
 
-              <div className="group">
-                <label className="label">Student Course</label>
+                  <div className="group">
+                    <label className="label">Student Course</label>
 
-                <select
-                  id="countries"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) => setCourse(e.target.value)}
-                >
-                  <option selected disabled>
-                    Choose a course
-                  </option>
-                  {coursesRespone.isSuccess &&
-                    year &&
-                    coursesRespone.data?.map(
-                      (course: { name: string; id: string }) => {
-                        return <option value={course.id}>{course.name}</option>;
-                      }
-                    )}
-                </select>
-              </div>
+                    <select
+                      id="countries"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      onChange={(e) => setCourse(e.target.value)}
+                    >
+                      <option selected disabled>
+                        Choose a course
+                      </option>
+                      {coursesRespone.isSuccess &&
+                        year &&
+                        coursesRespone.data?.map(
+                          (course: { name: string; id: string }) => {
+                            return (
+                              <option value={course.id}>{course.name}</option>
+                            );
+                          }
+                        )}
+                    </select>
+                  </div>
 
-              <div className="group">
-                <label className="label">Student Status</label>
+                  <div className="group">
+                    <label className="label">Student Status</label>
 
-                <select
-                  id="Status"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option selected disabled>
-                    Choose a status
-                  </option>
-                  <option value={"active"}>active</option>
-                  <option value={"suspanded"}>suspanded</option>
-                </select>
-              </div>
-              <div className="group">
-                <label className="label">Student's Authority</label>
+                    <select
+                      id="Status"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option selected disabled>
+                        Choose a status
+                      </option>
+                      <option value={"active"}>active</option>
+                      <option value={"suspanded"}>suspanded</option>
+                    </select>
+                  </div>
+                  <div className="group">
+                    <label className="label">Student's Authority</label>
 
-                <select
-                  id="Authority"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) => {
-                    console.log(!!Number(e.target.value));
-                    setIsAdmin(!!Number(e.target.value));
-                  }}
-                >
-                  <option selected disabled>
-                    Choose a student authority
-                  </option>
-                  <option value={1}>Admin</option>
-                  <option value={0} selected>
-                    Student
-                  </option>
-                </select>
-              </div>
+                    <select
+                      id="Authority"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      onChange={(e) => {
+                        console.log(!!Number(e.target.value));
+                        setIsAdmin(!!Number(e.target.value));
+                      }}
+                    >
+                      <option selected disabled>
+                        Choose a student authority
+                      </option>
+                      <option value={1}>Admin</option>
+                      <option value={0} selected>
+                        Student
+                      </option>
+                    </select>
+                  </div>
 
-              <button className="btn-primary w-full">Create</button>
+                  <button className="btn-primary w-full">Create</button>
+                </div>
+              )}
             </div>
-          </div>
+          )
         )}
       </form>
     </>

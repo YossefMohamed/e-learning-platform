@@ -2,7 +2,7 @@ import request from "@/endpoints/request";
 import Link from "next/link";
 import React from "react";
 import { BsPen } from "react-icons/bs";
-import { useMutation } from "react-query";
+import { useRouter } from "next/router";
 
 const Unit = ({
   id,
@@ -15,18 +15,23 @@ const Unit = ({
   course: string;
   idx: number;
 }) => {
+  const router = useRouter();
+
   return (
     <div className="t-head w-full text-2xl border p-6 text-tsecondary font-bold flex justify-between">
       <span>
         Unit {idx} : {name}
       </span>
       <div className="group flex gap-4">
-        <Link href="/years/lesson/add" className="btn-primary text-sm">
+        <Link
+          href={`${router.asPath}/unit/${id}`}
+          className="btn-primary text-sm"
+        >
           Add lesson
         </Link>
 
         <Link
-          href="/years/lesson/add"
+          href={`${router.asPath}/unit/${id}`}
           className="btn-primary text-sm  flex items-center gap-1"
         >
           Edit <BsPen />

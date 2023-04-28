@@ -2,9 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/custom-hooks/useAuth";
 import { addUser } from "@/redux/slices/userSlices";
-import { useDispatch } from "react-redux";
-import { toast } from "react-hot-toast";
-import { AppDispatch } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, Rootstate } from "@/redux/store";
 const Auth = ({ children }: any) => {
   const router = useRouter();
 
@@ -17,13 +16,14 @@ const Auth = ({ children }: any) => {
     error,
   } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
-
+  const { isAuthenticated, user } = useSelector(
+    (state: Rootstate) => state.userState
+  );
   React.useEffect(() => {
     const token: string = localStorage.getItem("token") || "";
-    !data && Auth(token);
+    !isAuthenticated && Auth(token);
     data && dispatch(addUser(data));
-    isError && toast.error(error);
-  }, [data, isError]);
+  }, [router]);
 
   return <>{children}</>;
 };

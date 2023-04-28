@@ -13,10 +13,10 @@
     @apply shadow-2xl -translate-y-0.5;
   }
   .text-input {
-    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
   }
   .label {
-    @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+    @apply block mb-2 text-sm font-medium text-gray-900;
   }
   .title {
     @apply text-3xl italic py-2 font-semibold text-gray-800 border-b-4 border-b-primary w-fit my-10;
@@ -29,7 +29,7 @@
     @apply cursor-pointer text-sm inline-flex items-center font-bold   px-3 py-1 rounded-full bg-white text-gray-700 border hover:bg-primary hover:text-ttertiary;
   }
   .alert {
-    @apply bg-orange-100 border-l-4 border-primary text-orange-700 p-4;
+    @apply bg-secondary font-bold border-l-4 border-primary bg-opacity-80 text-light p-4;
   }
 }
 

@@ -148,8 +148,8 @@ const index = () => {
             {yearsResponse.isLoading ? (
               <Spinner />
             ) : (
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <table className="w-full text-sm text-left text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
                   <tr>
                     <th scope="col" className="px-6 py-3">
                       Year
@@ -171,7 +171,7 @@ const index = () => {
                 </thead>
                 <tbody>
                   {yearsResponse.isError ? (
-                    <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+                    <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50  ">
                       {yearsResponse.error?.error[0].message}
                     </div>
                   ) : (
@@ -179,10 +179,10 @@ const index = () => {
                     yearsResponse.data.map(
                       (year: { name: string; id: string }) => {
                         return (
-                          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                          <tr className="bg-white border-b   hover:bg-gray-50 ">
                             <th
                               scope="row"
-                              className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                              className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap "
                             >
                               <div className="pl-3">
                                 <div className="text-base font-semibold">

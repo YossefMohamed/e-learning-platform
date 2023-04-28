@@ -1,7 +1,5 @@
 import Modal from "@/components/Modal";
-import Link from "next/link";
 import React from "react";
-import { BsBook, BsPen, BsPlayBtn, BsStopwatch } from "react-icons/bs";
 import request from "@/endpoints/request";
 import { useMutation, useQuery } from "react-query";
 import { useRouter } from "next/router";
@@ -10,6 +8,7 @@ import { Rootstate } from "@/redux/store";
 import { toast } from "react-hot-toast";
 import Spinner from "@/components/Spinner";
 import Unit from "@/components/Unit";
+import Lesson from "@/components/Lesson";
 
 function Year() {
   const { isAuthenticated, user, loading } = useSelector(
@@ -18,18 +17,22 @@ function Year() {
 
   const router = useRouter();
 
-  React.useLayoutEffect(() => {
-    if (
-      user.course !== router.query.course &&
-      user.year !== router.query.year &&
-      !user.isAdmin &&
-      !loading
-    ) {
-      toast.error("You are not a participant in this course");
-      router.push(`/years`);
+  const lessonsResponse = useQuery(
+    "lessons",
+    async () => {
+      const res = await request({
+        url: `/api/lessons/${router.query.course}`,
+        method: "get",
+      }).then((res) => {
+        return res.data;
+      });
+
+      return res;
+    },
+    {
+      enabled: false,
     }
-    if (!isAuthenticated && !loading) router.push("/login");
-  }, [user, isAuthenticated, router.query]);
+  );
 
   const [modal, setModal] = React.useState(false);
 
@@ -41,16 +44,22 @@ function Year() {
   };
 
   const course = `${router.query.course}`;
-  const unitsResponse = useQuery("years", async () => {
-    const res = await request({
-      url: `/api/units/${router.query.course}`,
-      method: "get",
-    }).then((res) => {
-      return res.data;
-    });
+  const unitsResponse = useQuery(
+    "units",
+    async () => {
+      const res = await request({
+        url: `/api/units/${router.query.course}`,
+        method: "get",
+      }).then((res) => {
+        return res.data;
+      });
 
-    return res;
-  });
+      return res;
+    },
+    {
+      enabled: false,
+    }
+  );
 
   const createUnitResponse = useMutation(async (data: any) => {
     const token: string = localStorage.getItem("token") || "";
@@ -83,6 +92,23 @@ function Year() {
     createUnitResponse.isSuccess && unitsResponse.refetch();
     createUnitResponse.isSuccess && closeModal();
   }, [createUnitResponse.isError, createUnitResponse.isSuccess]);
+
+  React.useEffect(() => {
+    if (router.isReady) {
+      if (
+        user.course !== router.query.course &&
+        user.year !== router.query.year &&
+        !user.isAdmin &&
+        !loading
+      ) {
+        toast.error("You are not a participant in this course");
+        router.push(`/years`);
+      } else {
+        unitsResponse.refetch();
+        lessonsResponse.refetch();
+      }
+    }
+  }, [user, isAuthenticated, router.query]);
 
   return (
     <div className="p-10 relative min-h-screen">
@@ -126,65 +152,33 @@ function Year() {
       </nav>
       <div className="sec-title w-fit">Course Details</div>
 
-      {unitsResponse.isLoading ? (
+      {unitsResponse.isLoading && lessonsResponse.isLoading ? (
         <Spinner />
       ) : (
         <div className="table  w-full">
-          {unitsResponse.data.map(
+          {unitsResponse.data?.map(
             ({ name, id }: { name: string; id: string }, idx: number) => {
+              let lessons: any = [];
+              lessonsResponse.data?.map((lesson: any) => {
+                if (lesson.unit.id === id) lessons.push(lesson);
+              });
+              console.log(lessons);
               return (
-                <Unit
-                  id={id}
-                  name={name}
-                  key={id}
-                  idx={idx + 1}
-                  course={course}
-                />
+                <>
+                  <Unit
+                    id={id}
+                    name={name}
+                    key={id}
+                    idx={idx + 1}
+                    course={course}
+                  />
+                  {lessons.map((lesson: any) => (
+                    <Lesson name={lesson.name} id={lesson.id} key={lesson.id} />
+                  ))}
+                </>
               );
             }
           )}
-          {/* <div className="t-data w-full text-md border p-6 text-tsecondary justify-between items-center font-bold bg-gray-50 flex">
-          <div className="section-title">integration by parts</div>
-          <div className="icons flex  gap-4">
-            <Link
-              href="/years/lesson/1"
-              className="play  btn-secondary flex items-center gap-1 font-normal"
-            >
-              Watch
-              <span className="font-bold ">
-                <BsPlayBtn />
-              </span>
-            </Link>
-            <Link
-              href="/years/lesson/1"
-              className="play  btn-secondary flex items-center gap-1 font-normal"
-            >
-              Exam
-              <span className="font-bold ">
-                <BsStopwatch />
-              </span>
-            </Link>
-            <Link
-              href="/years/lesson/1"
-              className="play  btn-secondary flex items-center gap-1 font-normal"
-            >
-              Home work
-              <span className="font-bold ">
-                <BsBook />
-              </span>
-            </Link>
-
-            <Link
-              href="/years/lesson/add"
-              className="play  btn-secondary flex items-center gap-1 font-normal"
-            >
-              Edit
-              <span className="font-bold ">
-                <BsPen />
-              </span>
-            </Link>
-          </div>
-        </div> */}
 
           <div className="t-head w-full text-2xl border p-6 text-tsecondary font-bold flex justify-between">
             <span>Add new unit</span>

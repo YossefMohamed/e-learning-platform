@@ -84,7 +84,7 @@ const CreateUserModal: React.FC<{
           onSubmitForm();
         }}
       >
-        {yearsResponse.isLoading || coursesRespone.isLoading ? (
+        {yearsResponse.isLoading ? (
           <Spinner />
         ) : (
           <>
@@ -148,18 +148,17 @@ const CreateUserModal: React.FC<{
 
                 <select
                   id="countries"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   onChange={(e) => setYear(e.target.value)}
                 >
                   <option selected disabled>
                     Choose a year
                   </option>
-                  {yearsResponse.isSuccess &&
-                    yearsResponse.data?.map(
-                      (year: { name: string; id: string }) => {
-                        return <option value={year.id}>{year.name}</option>;
-                      }
-                    )}
+                  {yearsResponse.data?.map(
+                    (year: { name: string; id: string }) => {
+                      return <option value={year.id}>{year.name}</option>;
+                    }
+                  )}
                 </select>
               </div>
 
@@ -168,7 +167,7 @@ const CreateUserModal: React.FC<{
 
                 <select
                   id="countries"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   onChange={(e) => setCourse(e.target.value)}
                 >
                   <option selected disabled>
@@ -188,7 +187,7 @@ const CreateUserModal: React.FC<{
 
                 <select
                   id="Status"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option selected disabled>
@@ -203,7 +202,7 @@ const CreateUserModal: React.FC<{
 
                 <select
                   id="Authority"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                   onChange={(e) => setIsAdmin(Boolean(e.target.value))}
                 >
                   <option value="true">Admin</option>

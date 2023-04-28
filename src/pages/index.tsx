@@ -18,7 +18,7 @@ export default function Home() {
 
     return res;
   });
-
+  console.log(yearsResponse);
   return (
     <>
       <section className="my-10">

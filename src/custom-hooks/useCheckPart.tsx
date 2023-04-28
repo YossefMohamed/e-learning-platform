@@ -8,7 +8,8 @@ const useCheckPart = () => {
   const { isAuthenticated, user } = useSelector(
     (state: Rootstate) => state.userState
   );
-
+  const [loading, setLoading] = React.useState(false);
+  const [part, setPart] = React.useState(false);
   const router = useRouter();
 
   React.useEffect(() => {
@@ -18,10 +19,11 @@ const useCheckPart = () => {
       !user.isAdmin
     ) {
       toast.error("You are not a participant in this course");
-      router.push(`/years`);
     }
     if (!isAuthenticated) router.push("/login");
   }, [user, isAuthenticated, router.query]);
+
+  return [loading, part];
 };
 
 export default useCheckPart;
