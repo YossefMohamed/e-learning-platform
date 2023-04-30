@@ -80,7 +80,12 @@ const LessonLayout: React.FC<{
         >
           Extra resources
         </Link>
-
+        <Link
+          href="/years/lesson/1/submit"
+          className="Video  cursor-pointer p-3 px-6 hover:text-light hover:bg-primary"
+        >
+          Submit
+        </Link>
         <div className="Video  cursor-pointer p-3 px-6 hover:text-light hover:bg-primary">
           Quiz
         </div>

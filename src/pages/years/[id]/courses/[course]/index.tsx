@@ -92,7 +92,7 @@ function Year() {
     createUnitResponse.isSuccess && unitsResponse.refetch();
     createUnitResponse.isSuccess && closeModal();
   }, [createUnitResponse.isError, createUnitResponse.isSuccess]);
-
+  console.log(lessonsResponse);
   React.useEffect(() => {
     if (router.isReady) {
       if (
@@ -162,7 +162,6 @@ function Year() {
               lessonsResponse.data?.map((lesson: any) => {
                 if (lesson.unit.id === id) lessons.push(lesson);
               });
-              console.log(lessons);
               return (
                 <>
                   <Unit
@@ -173,7 +172,11 @@ function Year() {
                     course={course}
                   />
                   {lessons.map((lesson: any) => (
-                    <Lesson name={lesson.name} id={lesson.id} key={lesson.id} />
+                    <Lesson
+                      name={lesson.name}
+                      id={lesson._id}
+                      key={lesson._id}
+                    />
                   ))}
                 </>
               );

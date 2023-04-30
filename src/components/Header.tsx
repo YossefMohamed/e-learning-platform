@@ -11,6 +11,18 @@ export const Header = () => {
     (state: Rootstate) => state.userState
   );
   const changeBackground = () => {
+    var body = document.body,
+      html = document.documentElement;
+
+    var height = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+    console.log((window.scrollY / (height - 308)) * 100);
+
     if (window.scrollY >= 66) {
       setNavbar(true);
     } else {

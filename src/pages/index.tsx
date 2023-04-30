@@ -55,8 +55,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <section className="text-center relative flex justify-center flex-col items-center px-[10%] my-10 bg-primary bg-opacity-5">
+      <section className="text-center relative flex justify-center flex-col items-center px-[10%] mt-10 bg-primary bg-opacity-5">
         <div className="w-full h-full absolute -z-10 top-0 right-0 bg-[url('/pattern.png')] opacity-5"></div>
 
         <div className="sec-title">The results speak for themselves</div>
@@ -101,8 +100,10 @@ export default function Home() {
             />
           </svg>
         </a>
+      </section>{" "}
+      <section className="h-[100px] bg-tertiary text-light text-4xl font-bold flex justify-center items-center ">
+        Learn from the best!
       </section>
-
       <section className="my-10">
         <div className="gap-8 items-center  px-4 mx-auto max-w-screen-xl flex flex-row-reverse">
           <img className="w-1/2" src="/math2.png" alt="dashboard image" />
@@ -118,7 +119,54 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <section className="text-center relative flex justify-center flex-col items-center px-[5%] my-10 bg-primary bg-opacity-5">
+        <div className="w-full h-full absolute -z-10 top-0 right-0 bg-[url('/pattern.png')] opacity-5"></div>
 
+        <div className="sec-title">Study online</div>
+        <div className="cards flex  w-full justify-around py-10">
+          <div className="card  flex flex-col items-center  gap-4 ">
+            <div className="font-bold h-full w-[40%]">
+              <img
+                src="/section1.png"
+                alt="section3"
+                className="h-full w-full"
+              />
+            </div>
+            <div className="flex flex-col  gap-4">
+              <div className="text-2xl font-light">Study Anywhere</div>
+              <div>Distance Learning and flexible study options</div>
+            </div>
+          </div>
+
+          <div className="card  flex flex-col items-center  gap-4 ">
+            <div className="font-bold h-full w-[40%]">
+              <img
+                src="/section2.png"
+                alt="section3"
+                className="h-full w-full"
+              />
+            </div>
+            <div className="flex flex-col  gap-4">
+              <div className="text-2xl font-light">Full Online Lessons</div>
+              <div>Adapt to your own timing and convenience</div>
+            </div>
+          </div>
+
+          <div className="card  flex flex-col items-center  gap-4 ">
+            <div className="font-bold h-full w-[40%]">
+              <img
+                src="/section3.png"
+                alt="section3"
+                className="h-full w-full"
+              />
+            </div>
+            <div className="flex flex-col  gap-4">
+              <div className="text-2xl font-light">Earn Certificates</div>
+              <div>Get a certificate immediately after each course</div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="text-center flex justify-center flex-col items-center px-[5%] my-10">
         <div className="sec-title">Choose your year</div>
 
@@ -137,6 +185,9 @@ export default function Home() {
                 />
               );
             })
+          )}
+          {yearsResponse.isSuccess && !yearsResponse.data?.length && (
+            <div className="alert w-full">No Years available</div>
           )}
         </div>
       </section>

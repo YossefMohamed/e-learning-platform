@@ -139,7 +139,7 @@ const index = () => {
         )}
         <div className="relative sm:rounded-lg flex-1 p-10 border flex flex-col gap-5">
           <div className="flex gap-1 items-center  btn-secondary  ">
-            <BsPen /> Courses
+            <BsPen /> Years
           </div>
           <div className="flex flex-col gap-6 bg-gray-100 p-6 rounded-xl">
             <div className="btn-primary ml-auto" onClick={openModal}>
@@ -222,6 +222,9 @@ const index = () => {
                   )}
                 </tbody>
               </table>
+            )}
+            {yearsResponse.data?.length === 0 && (
+              <div className="alert w-full">no years found</div>
             )}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { BsPerson } from "react-icons/bs";
+import { BsPen, BsPerson } from "react-icons/bs";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import CheckModal from "@/components/CheckModal";
 import { useMutation, useQuery } from "react-query";
@@ -145,7 +145,7 @@ const index = () => {
         )}
         <div className="relative sm:rounded-lg flex-1 p-10 border flex flex-col gap-5">
           <div className="flex gap-1 items-center  btn-secondary  ">
-            <BsPerson /> Users
+            <BsPen /> Courses
           </div>
           <div className="flex flex-col gap-6 bg-gray-100 p-6 rounded-xl">
             <div className="btn-primary ml-auto" onClick={openModal}>
@@ -179,7 +179,7 @@ const index = () => {
                   </div>
                 ) : (
                   coursesResponse.isSuccess &&
-                  coursesResponse.data.map(
+                  coursesResponse.data?.map(
                     (course: {
                       name: string;
                       id: string;
@@ -205,7 +205,7 @@ const index = () => {
                           <td className="px-6 py-4">
                             <div className="flex items-center">250</div>
                           </td>
-                          <td className="px-6 py-4 ">{course.year.name}</td>
+                          <td className="px-6 py-4 ">{course.year?.name}</td>
                           <td className="px-6 py-4 flex gap-2">
                             <div
                               className="btn-primary"
@@ -233,6 +233,9 @@ const index = () => {
                 )}
               </tbody>
             </table>
+            {coursesResponse.data?.length === 0 && (
+              <div className="alert w-full">no courses found</div>
+            )}
           </div>
         </div>
       </>

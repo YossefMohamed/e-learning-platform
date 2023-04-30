@@ -54,17 +54,13 @@ function Add() {
     formData.append("extra", extra);
     formData.append("quiz", quiz);
     formData.append("description", description);
-    if (name && video) {
-      !isLoading && createNewLesson(formData);
-    } else {
-      !name && toast.error("Please add a valid name");
-      !video && toast.error("Please add a valid video");
-    }
+    !isLoading && createNewLesson(formData);
   };
 
   React.useEffect(() => {
     isSuccess &&
       router.push(`/years/${router.query.id}/courses/${router.query.course}`);
+    isError && toast.error(error);
   }, [isError, isSuccess, error]);
 
   return (
@@ -81,6 +77,7 @@ function Add() {
             setVideo(e.target.files[0]);
           }
         }}
+        accept="video/mp4,video/x-m4v,video/*"
       />
       <div className="sec-title w-fit flex items-center gap-4">
         Lecture File <FaFile />

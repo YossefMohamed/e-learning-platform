@@ -3,6 +3,8 @@ import Link from "next/link";
 import React from "react";
 import { BsPen } from "react-icons/bs";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { Rootstate } from "@/redux/store";
 
 const Unit = ({
   id,
@@ -15,6 +17,10 @@ const Unit = ({
   course: string;
   idx: number;
 }) => {
+  const { isAuthenticated, user, loading } = useSelector(
+    (state: Rootstate) => state.userState
+  );
+
   const router = useRouter();
 
   return (
@@ -22,21 +28,23 @@ const Unit = ({
       <span>
         Unit {idx} : {name}
       </span>
-      <div className="group flex gap-4">
-        <Link
-          href={`${router.asPath}/unit/${id}`}
-          className="btn-primary text-sm"
-        >
-          Add lesson
-        </Link>
+      {user.isAdmin && (
+        <div className="group flex gap-4">
+          <Link
+            href={`${router.asPath}/unit/${id}`}
+            className="btn-primary text-sm"
+          >
+            Add lesson
+          </Link>
 
-        <Link
-          href={`${router.asPath}/unit/${id}`}
-          className="btn-primary text-sm  flex items-center gap-1"
-        >
-          Edit <BsPen />
-        </Link>
-      </div>
+          <Link
+            href={`${router.asPath}/unit/${id}`}
+            className="btn-primary text-sm  flex items-center gap-1"
+          >
+            Edit <BsPen />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
